@@ -22,7 +22,7 @@
 
         /* Estilo del contador con efecto VHS */
         #countdown {
-            font-size: 4em;
+            font-size: 2.5em; /* Ajustar el tamaño para móviles */
             text-align: center;
             letter-spacing: 0.1em;
             color: #ffffff;
@@ -30,6 +30,8 @@
             animation: pulseWhite 1s infinite, vhsEffect 0.15s infinite;
             filter: blur(1px) contrast(1.2) saturate(1.3);
             position: relative;
+            white-space: nowrap; /* Evitar saltos de línea en el contador */
+            overflow: hidden; /* Asegurarse de que el texto no se desborde */
         }
 
         /* Efecto de pulso blanco brillante */

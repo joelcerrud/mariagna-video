@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuenta Regresiva VHS</title>
     <style>
         /* Fondo oscuro */
@@ -19,18 +19,6 @@
             flex-direction: column;
             cursor: pointer;
             position: relative;
-            transform: rotate(90deg); /* Gira la página 90 grados */
-            transform-origin: top left; /* Asegura que gire desde la esquina superior izquierda */
-        }
-
-        /* Ajustes para cuando la orientación es horizontal */
-        @media (orientation: landscape) {
-            body {
-                transform: rotate(0deg); /* Desactiva la rotación en pantallas horizontales */
-                transform-origin: unset;
-                height: 100vh;
-                width: 100vw;
-            }
         }
 
         /* Video de fondo */
@@ -219,19 +207,18 @@
             countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
             if (distance < 0) {
-                clearInterval(countdownInterval);
-                countdownElement.innerHTML = "¡Tiempo alcanzado!";
-                setTimeout(() => {
-                    messageElement.style.display = "block";
-                    messageElement.style.opacity = 1;
-                    buttonElement.style.display = "block";
-                    buttonElement.style.opacity = 1;
-                }, 1000);
+                countdownElement.innerHTML = "Tiempo terminado";
+                messageElement.style.display = "block";
+                buttonElement.style.display = "block";
+                messageElement.style.opacity = 1;
+                buttonElement.style.opacity = 1;
+            } else {
+                setTimeout(updateCountdown, 1000);
             }
         }
 
         function playAudio() {
-            audioElement.play().catch((error) => {
+            audioElement.play().catch(error => {
                 console.log("No se pudo reproducir el audio:", error);
             });
         }
@@ -242,8 +229,6 @@
             videoElement.style.opacity = 1;
             videoElement.play();
         }
-
-        let countdownInterval = setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>

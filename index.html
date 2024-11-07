@@ -32,6 +32,7 @@
             z-index: -1;
             opacity: 0.5; /* Opcional, ajusta la visibilidad */
             pointer-events: none; /* Evita que el video interfiera con los clics */
+            display: none; /* Se oculta inicialmente */
         }
 
         /* Estilo del contador con efecto retro */
@@ -44,6 +45,7 @@
             filter: blur(1px) contrast(1.5) saturate(1.5);
             position: relative;
             z-index: 1;
+            opacity: 0; /* Inicialmente invisible */
         }
 
         /* Efecto de pulso verde retro */
@@ -79,12 +81,46 @@
             }
         }
 
-        /* Mensaje de desbloqueo */
+        /* Ruido y distorsión de fondo */
+        #countdown::before, #countdown::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 0, 0.05);
+            mix-blend-mode: overlay;
+            animation: noise 0.2s infinite;
+        }
+
+        #countdown::after {
+            opacity: 0.5;
+            animation: noise 0.3s infinite;
+        }
+
+        @keyframes noise {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-2px, -2px); }
+            20% { transform: translate(2px, -2px); }
+            30% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, 2px); }
+            50% { transform: translate(0, 0); }
+            60% { transform: translate(2px, -2px); }
+            70% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, 2px); }
+            90% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Mensaje de desbloqueo con opacidad */
         #message, #button {
             display: none;
             text-align: center;
             font-size: 1.8em;
             margin-top: 20px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
             color: #00ff00;
         }
 
@@ -104,7 +140,7 @@
             transform: scale(1.05);
         }
 
-        /* Estilo del video principal */
+        /* Estilo del video con opacidad */
         #video {
             display: none;
             width: 80%;
@@ -125,14 +161,14 @@
     <div id="message">Acceso Autorizado: Presiona para ver contenido</div>
     <button id="button" onclick="showVideo(event)">Revelar Video</button>
     <video id="videoFondo" autoplay loop muted>
-        <source src="./assets/videofondo.mp4" type="video/mp4">
+        <source src="video/videofondo.mp4" type="video/mp4">
         Tu navegador no soporta el video.
     </video>
     <video id="video" controls>
-        <source src="./assets/video.mp4" type="video/mp4">
+        <source src="video/video.mp4" type="video/mp4">
         Tu navegador no soporta el video.
     </video>
-    <audio id="audio" src="./assets/audio.mp3"></audio>
+    <audio id="audio" src="audio/audio.mp3"></audio> <!-- Añadir el audio aquí -->
 
     <script>
         const targetDate = new Date("2024-12-21T00:00:00").getTime();
@@ -148,8 +184,15 @@
         function startCountdown() {
             if (!countdownStarted) {
                 countdownStarted = true;
-                updateCountdown();
+                countdownElement.innerHTML = "";
+                countdownElement.style.opacity = 0;  // Inicialmente invisible
+
+                // Desvanecer con efecto retro
+                countdownElement.style.animation = "fadeInVHS 1s forwards";
+
                 playAudio();
+                videoFondoElement.style.display = "block"; // Muestra el video de fondo después del clic
+                updateCountdown();
             }
         }
 
@@ -164,7 +207,7 @@
 
             if (distance > 0) {
                 countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-                setTimeout(updateCountdown, 1000);
+                setTimeout(updateCountdown, 1000); // Actualización precisa en 1 segundo
             } else {
                 countdownElement.style.display = "none";
                 messageElement.style.display = "block";
@@ -174,7 +217,7 @@
 
         function showVideo(event) {
             event.stopPropagation();
-            videoElement.style.display = "block";
+            videoElement.style.display = "block"; // Muestra el video
             videoElement.play();
         }
 
@@ -184,4 +227,3 @@
     </script>
 </body>
 </html>
-

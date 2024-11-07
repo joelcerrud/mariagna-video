@@ -160,15 +160,15 @@
     <div id="countdown">Inicializando...</div>
     <div id="message">Acceso Autorizado: Presiona para ver contenido</div>
     <button id="button" onclick="showVideo(event)">Revelar Video</button>
-    <video id="videoFondo" autoplay loop muted>
+    <video id="videoFondo" autoplay loop muted preload="auto">
         <source src="videofondo.mp4" type="video/mp4">
         Tu navegador no soporta el video.
     </video>
-    <video id="video" controls>
+    <video id="video" controls preload="auto">
         <source src="video.mp4" type="video/mp4">
         Tu navegador no soporta el video.
     </video>
-    <audio id="audio" src="audio.mp3"></audio>
+    <audio id="audio" src="audio.mp3" preload="auto"></audio>
 
     <script>
         const targetDate = new Date("2024-12-21T00:00:00").getTime();
@@ -219,15 +219,17 @@
 
         function playAudio() {
             audioElement.play().catch(error => {
-                console.log("Audio blocked by the browser", error);
+                console.log("No se pudo reproducir el audio:", error);
             });
         }
 
         function showVideo(event) {
             event.stopPropagation();
             videoElement.style.display = "block";
-            videoElement.style.animation = "fadeInVideo 2s forwards ease-in-out";
+            videoElement.style.opacity = 1;
+            videoElement.play();
         }
     </script>
 </body>
 </html>
+

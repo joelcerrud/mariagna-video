@@ -206,7 +206,7 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             if (distance > 0) {
-                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                countdownElement.innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
                 setTimeout(updateCountdown, 1000); // Actualización precisa en 1 segundo
             } else {
                 countdownElement.style.display = "none";
@@ -227,5 +227,3 @@
     </script>
 </body>
 </html>
->
-

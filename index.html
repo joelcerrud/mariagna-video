@@ -161,14 +161,14 @@
     <div id="message">Acceso Autorizado: Presiona para ver contenido</div>
     <button id="button" onclick="showVideo(event)">Revelar Video</button>
     <video id="videoFondo" autoplay loop muted>
-        <source src="video/videofondo.mp4" type="video/mp4">
+        <source src="videofondo.mp4" type="video/mp4">
         Tu navegador no soporta el video.
     </video>
     <video id="video" controls>
-        <source src="video/video.mp4" type="video/mp4">
+        <source src="video.mp4" type="video/mp4">
         Tu navegador no soporta el video.
     </video>
-    <audio id="audio" src="audio/audio.mp3"></audio> <!-- Añadir el audio aquí -->
+    <audio id="audio" src="audio.mp3"></audio>
 
     <script>
         const targetDate = new Date("2024-12-21T00:00:00").getTime();
@@ -185,13 +185,12 @@
             if (!countdownStarted) {
                 countdownStarted = true;
                 countdownElement.innerHTML = "";
-                countdownElement.style.opacity = 0;  // Inicialmente invisible
+                countdownElement.style.opacity = 0;
 
-                // Desvanecer con efecto retro
                 countdownElement.style.animation = "fadeInVHS 1s forwards";
 
                 playAudio();
-                videoFondoElement.style.display = "block"; // Muestra el video de fondo después del clic
+                videoFondoElement.style.display = "block";
                 updateCountdown();
             }
         }
@@ -205,24 +204,29 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (distance > 0) {
-                countdownElement.innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s;
-                setTimeout(updateCountdown, 1000); // Actualización precisa en 1 segundo
-            } else {
-                countdownElement.style.display = "none";
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                countdownElement.innerHTML = "Tiempo terminado";
                 messageElement.style.display = "block";
                 buttonElement.style.display = "block";
+                messageElement.style.opacity = 1;
+                buttonElement.style.opacity = 1;
+            } else {
+                setTimeout(updateCountdown, 1000);
             }
+        }
+
+        function playAudio() {
+            audioElement.play().catch(error => {
+                console.log("Audio blocked by the browser", error);
+            });
         }
 
         function showVideo(event) {
             event.stopPropagation();
-            videoElement.style.display = "block"; // Muestra el video
-            videoElement.play();
-        }
-
-        function playAudio() {
-            audioElement.play();
+            videoElement.style.display = "block";
+            videoElement.style.animation = "fadeInVideo 2s forwards ease-in-out";
         }
     </script>
 </body>

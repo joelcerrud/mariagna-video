@@ -147,6 +147,7 @@
             max-width: 800px;
             opacity: 0;
             animation: fadeInVideo 2s forwards ease-in-out;
+            z-index: 2;
         }
 
         /* Animación de aparición del video */
@@ -229,6 +230,14 @@
 
         function showVideo(event) {
             event.stopPropagation();
+
+            // Ocultar elementos existentes
+            videoFondoElement.style.display = "none";
+            countdownElement.style.display = "none";
+            messageElement.style.display = "none";
+            buttonElement.style.display = "none";
+
+            // Mostrar el video principal
             videoElement.style.display = "block";
             videoElement.style.opacity = 1;
             videoElement.play();
@@ -236,3 +245,4 @@
     </script>
 </body>
 </html>
+

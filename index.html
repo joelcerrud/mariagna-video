@@ -212,6 +212,10 @@
                 buttonElement.style.display = "block";
                 messageElement.style.opacity = 1;
                 buttonElement.style.opacity = 1;
+
+                // Detener la música
+                audioElement.pause();
+                audioElement.currentTime = 0; // Reinicia el audio si es necesario
             } else {
                 setTimeout(updateCountdown, 1000);
             }
@@ -232,4 +236,3 @@
     </script>
 </body>
 </html>
-

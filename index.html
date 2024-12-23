@@ -3,256 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuenta Regresiva VHS</title>
+    <title>Página Desolada</title>
     <style>
-        /* Fondo oscuro */
+        /* Fondo oscuro con parpadeo tenue */
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: radial-gradient(circle, #000, #111 50%, #222);
-            color: #00ff00; /* Verde retro */
+            background: radial-gradient(circle, #111, #000 50%, #222);
+            color: #808080; /* Gris melancólico */
             font-family: 'Courier New', monospace;
             overflow: hidden;
             flex-direction: column;
-            cursor: pointer;
-            position: relative;
+            animation: flicker 4s infinite alternate ease-in-out;
         }
 
-        /* Video de fondo */
-        #videoFondo {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.5; /* Opcional, ajusta la visibilidad */
-            pointer-events: none; /* Evita que el video interfiera con los clics */
-            display: none; /* Se oculta inicialmente */
+        @keyframes flicker {
+            0%, 100% { background-color: #000; }
+            50% { background-color: #111; }
         }
 
-        /* Estilo del contador con efecto retro */
-        #countdown {
-            font-size: 4em;
-            letter-spacing: 0.1em;
-            color: #00ff00;
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-            animation: pulseVHS 1s infinite, glitch 0.15s infinite, fadeInVHS 1s forwards;
-            filter: blur(1px) contrast(1.5) saturate(1.5);
-            position: relative;
-            z-index: 1;
-            opacity: 0; /* Inicialmente invisible */
-        }
-
-        /* Efecto de pulso verde retro */
-        @keyframes pulseVHS {
-            0%, 100% {
-                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-            }
-            50% {
-                text-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00;
-            }
-        }
-
-        /* Glitch VHS */
-        @keyframes glitch {
-            0% { transform: translateX(1px); opacity: 0.95; }
-            25% { transform: translateX(-1px); opacity: 0.8; }
-            50% { transform: translateX(2px); opacity: 0.95; }
-            75% { transform: translateX(-1px); opacity: 1; }
-            100% { transform: translateX(0); }
-        }
-
-        /* Efecto de desvanecimiento tipo VHS al inicio */
-        @keyframes fadeInVHS {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-                filter: blur(3px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
-        }
-
-        /* Ruido y distorsión de fondo */
-        #countdown::before, #countdown::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 255, 0, 0.05);
-            mix-blend-mode: overlay;
-            animation: noise 0.2s infinite;
-        }
-
-        #countdown::after {
-            opacity: 0.5;
-            animation: noise 0.3s infinite;
-        }
-
-        @keyframes noise {
-            0% { transform: translate(0, 0); }
-            10% { transform: translate(-2px, -2px); }
-            20% { transform: translate(2px, -2px); }
-            30% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, 2px); }
-            50% { transform: translate(0, 0); }
-            60% { transform: translate(2px, -2px); }
-            70% { transform: translate(-2px, 2px); }
-            80% { transform: translate(2px, 2px); }
-            90% { transform: translate(-2px, -2px); }
-            100% { transform: translate(0, 0); }
-        }
-
-        /* Mensaje de desbloqueo con opacidad */
-        #message, #button {
-            display: none;
+        /* Mensaje depresivo con animación de desvanecimiento */
+        #message {
+            font-size: 1.5em;
             text-align: center;
-            font-size: 1.8em;
+            margin: 0 20px;
+            opacity: 0;
+            color: #808080;
+            animation: fadeInOut 8s infinite ease-in-out, degrade 15s infinite linear;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes degrade {
+            0% { filter: none; }
+            100% { filter: blur(3px) brightness(0.8); }
+        }
+
+        /* Efecto glitch en el texto */
+        #message::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            text-shadow: -1px 0 red;
+            top: 0;
+            color: #f00;
+            overflow: hidden;
+            clip-path: inset(0 50% 0 0);
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { clip-path: inset(0 100% 0 0); }
+            50% { clip-path: inset(0 0 0 0); }
+            100% { clip-path: inset(0 0 0 100%); }
+        }
+
+        /* Efecto de ruido en pantalla */
+        #noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            mix-blend-mode: overlay;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        /* Fragmentos adicionales */
+        #extra {
+            font-size: 1em;
+            color: #606060;
+            margin-top: 10px;
+            animation: appear 12s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes appear {
+            0%, 100% { opacity: 0; }
+            60% { opacity: 1; }
+        }
+
+        /* Texto del webhook */
+        #webhook {
+            font-size: 0.8em;
+            color: #666;
             margin-top: 20px;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-            color: #00ff00;
-        }
-
-        /* Estilo del botón */
-        #button {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            color: #000;
-            background-color: #00ff00;
-            border: 2px solid #00ff00;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        #button:hover {
-            background-color: #33ff33;
-            transform: scale(1.05);
-        }
-
-        /* Estilo del video con opacidad */
-        #video {
-            display: none;
-            width: 80%;
-            max-width: 800px;
-            opacity: 0;
-            animation: fadeInVideo 2s forwards ease-in-out;
-            z-index: 2;
-        }
-
-        /* Animación de aparición del video */
-        @keyframes fadeInVideo {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
-<body onclick="startCountdown()">
-    <div id="countdown">Inicializando...</div>
-    <div id="message">Acceso Autorizado: Presiona para ver contenido</div>
-    <button id="button" onclick="showVideo(event)">Revelar Video</button>
-    <video id="videoFondo" autoplay loop muted preload="auto">
-        <source src="videofondo.mp4" type="video/mp4">
-        Tu navegador no soporta el video.
-    </video>
-    <video id="video" controls preload="auto">
-        <source src="video.mp4" type="video/mp4">
-        Tu navegador no soporta el video.
-    </video>
-    <audio id="audio" src="audio.mp3" preload="auto"></audio>
+<body>
+    <div id="message" data-text="¿Por qué estás aquí?">
+        ¿Por qué estás aquí?
+    </div>
+    <div id="extra">Esto solía ser algo más...</div>
+    <div id="webhook">Webhook enviado...</div>
+    <div id="noise"></div>
+    <audio id="audio" src="https://freesound.org/data/previews/156/156264_2437358-lq.mp3" loop></audio>
 
     <script>
-        const targetDate = new Date("2024-12-21T00:00:00").getTime();
-        const countdownElement = document.getElementById("countdown");
-        const messageElement = document.getElementById("message");
-        const buttonElement = document.getElementById("button");
-        const videoElement = document.getElementById("video");
-        const videoFondoElement = document.getElementById("videoFondo");
-        const audioElement = document.getElementById("audio");
-
-        let countdownStarted = false;
-            // Código para notificar a Webhook.site
         const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
         fetch(webhookURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                evento: "usuario_activo",
+                evento: "pagina_eliminada",
                 timestamp: new Date().toISOString(),
                 navegador: navigator.userAgent,
             }),
         });
-        
-        function startCountdown() {
-            if (!countdownStarted) {
-                countdownStarted = true;
-                countdownElement.innerHTML = "";
-                countdownElement.style.opacity = 0;
 
-                countdownElement.style.animation = "fadeInVHS 1s forwards";
-
-                playAudio();
-                videoFondoElement.style.display = "block";
-                updateCountdown();
-            }
-        }
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-            if (distance < 0) {
-                countdownElement.innerHTML = "Tiempo terminado";
-                messageElement.style.display = "block";
-                buttonElement.style.display = "block";
-                messageElement.style.opacity = 1;
-                buttonElement.style.opacity = 1;
-
-                // Detener la música
-                audioElement.pause();
-                audioElement.currentTime = 0; // Reinicia el audio si es necesario
-            } else {
-                setTimeout(updateCountdown, 1000);
-            }
-        }
-
-        function playAudio() {
-            audioElement.play().catch(error => {
-                console.log("No se pudo reproducir el audio:", error);
-            });
-        }
-
-        function showVideo(event) {
-            event.stopPropagation();
-
-            // Ocultar elementos existentes
-            videoFondoElement.style.display = "none";
-            countdownElement.style.display = "none";
-            messageElement.style.display = "none";
-            buttonElement.style.display = "none";
-
-            // Mostrar el video principal
-            videoElement.style.display = "block";
-            videoElement.style.opacity = 1;
-            videoElement.play();
-        }
+        const audioElement = document.getElementById('audio');
+        audioElement.play().catch(() => {
+            console.log("No se pudo reproducir el audio automáticamente.");
+        });
     </script>
 </body>
 </html>

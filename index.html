@@ -66,9 +66,28 @@
     <div id="noise" style="display: none;"></div>
 
     <script>
+        // Detectar cuando la página ha cargado completamente
+        document.addEventListener("DOMContentLoaded", function() {
+            // Enviar datos del webhook con detalles del dispositivo
+            const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    evento: "pagina_visitada", // Cambié el nombre del evento
+                    timestamp: new Date().toISOString(),
+                    navegador: navigator.userAgent,
+                }),
+            }).then(response => {
+                console.log("Datos enviados al webhook");
+            }).catch(error => {
+                console.log("Error al enviar datos al webhook", error);
+            });
+        });
+
         // Reproducir el audio y mostrar el mensaje cuando se hace clic en "Cargando"
         document.getElementById("loading").addEventListener("click", function() {
-            // Reproducir audio desde GitHub
+            // Reproducir audio
             const audio = new Audio('https://raw.githubusercontent.com/joelcerrud/mariagna-video/master/audio.mp3'); // Usando el enlace correcto de GitHub
             audio.play().catch(() => {
                 console.log("No se pudo reproducir el audio automáticamente.");
@@ -80,18 +99,6 @@
 
             // Ocultar el mensaje de carga
             document.getElementById("loading").style.display = "none";
-        });
-
-        // Enviar datos del webhook con detalles del dispositivo
-        const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
-        fetch(webhookURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                evento: "pagina_eliminada",
-                timestamp: new Date().toISOString(),
-                navegador: navigator.userAgent,
-            }),
         });
     </script>
 </body>

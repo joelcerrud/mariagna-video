@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuenta regresiva VHS</title>
     <style>
-        /* Fondo oscuro con parpadeo tenue */
+        /* Fondo oscuro con tono apagado */
         body {
             margin: 0;
             display: flex;
@@ -17,12 +17,6 @@
             font-family: 'Courier New', monospace;
             overflow: hidden;
             flex-direction: column;
-            animation: flicker 4s infinite alternate ease-in-out;
-        }
-
-        @keyframes flicker {
-            0%, 100% { background-color: #000; }
-            50% { background-color: #111; }
         }
 
         /* Mensaje triste con animación de desvanecimiento */
@@ -33,6 +27,7 @@
             opacity: 0;
             color: #e0e0e0; /* Gris más claro para el texto */
             animation: fadeInOut 8s infinite ease-in-out;
+            text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.8), 0px 0px 25px rgba(255, 0, 0, 0.5);
         }
 
         @keyframes fadeInOut {
@@ -49,21 +44,17 @@
             height: 100%;
             background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
             mix-blend-mode: overlay;
-            opacity: 0.1;
+            opacity: 0.05;
             pointer-events: none;
-        }
-
-        /* Sombra más pesada para el texto */
-        #message {
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 0, 0, 0.7);
         }
     </style>
 </head>
 <body>
-    <div id="message">¿Por qué sigues aquí?</div>
+    <div id="message">¿Por qué estás aquí?</div>
     <div id="noise"></div>
 
     <script>
+        // Aquí puedes agregar alguna funcionalidad o webhook si es necesario
         const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
         fetch(webhookURL, {
             method: "POST",

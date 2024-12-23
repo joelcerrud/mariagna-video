@@ -32,17 +32,12 @@
             margin: 0 20px;
             opacity: 0;
             color: #808080;
-            animation: fadeInOut 8s infinite ease-in-out, degrade 15s infinite linear;
+            animation: fadeInOut 8s infinite ease-in-out;
         }
 
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
-        }
-
-        @keyframes degrade {
-            0% { filter: none; }
-            100% { filter: blur(3px) brightness(0.8); }
         }
 
         /* Efecto glitch en el texto */
@@ -76,35 +71,12 @@
             opacity: 0.05;
             pointer-events: none;
         }
-
-        /* Fragmentos adicionales */
-        #extra {
-            font-size: 1em;
-            color: #606060;
-            margin-top: 10px;
-            animation: appear 12s infinite ease-in-out;
-            opacity: 0;
-        }
-
-        @keyframes appear {
-            0%, 100% { opacity: 0; }
-            60% { opacity: 1; }
-        }
-
-        /* Texto del webhook */
-        #webhook {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <div id="message" data-text="¿Por qué estás aquí?">
         ¿Por qué estás aquí?
     </div>
-    <div id="extra">Esto solía ser algo más...</div>
-    <div id="webhook">Webhook enviado...</div>
     <div id="noise"></div>
     <audio id="audio" src="https://freesound.org/data/previews/156/156264_2437358-lq.mp3" loop></audio>
 

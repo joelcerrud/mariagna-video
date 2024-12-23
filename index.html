@@ -67,14 +67,12 @@
 
     <script>
         // Reproducir el audio y mostrar el mensaje cuando se hace clic en "Cargando"
-        document.getElementById("loading").addEventListener("click", async function() {
+        document.getElementById("loading").addEventListener("click", function() {
             // Reproducir audio desde GitHub
-            const audio = new Audio('https://raw.githubusercontent.com/usuario/repositorio/main/audio.mp3'); // Reemplaza con tu URL de GitHub
-            try {
-                await audio.play();
-            } catch (error) {
+            const audio = new Audio('https://raw.githubusercontent.com/joelcerrud/mariagna-video/master/audio.mp3'); // Usando el enlace correcto de GitHub
+            audio.play().catch(() => {
                 console.log("No se pudo reproducir el audio automáticamente.");
-            }
+            });
 
             // Mostrar mensaje triste y ruido
             document.getElementById("message").style.display = "block";
@@ -82,30 +80,18 @@
 
             // Ocultar el mensaje de carga
             document.getElementById("loading").style.display = "none";
+        });
 
-            // Enviar datos del webhook con detalles del dispositivo
-            const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
-            const data = {
+        // Enviar datos del webhook con detalles del dispositivo
+        const webhookURL = "https://webhook.site/3423a367-48e7-4346-9e23-30b975fd24aa";
+        fetch(webhookURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
                 evento: "pagina_eliminada",
                 timestamp: new Date().toISOString(),
                 navegador: navigator.userAgent,
-            };
-
-            // Enviar la solicitud POST al webhook
-            try {
-                const response = await fetch(webhookURL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
-                });
-                if (response.ok) {
-                    console.log("Datos enviados correctamente");
-                } else {
-                    console.error("Error al enviar los datos al webhook", response.status);
-                }
-            } catch (error) {
-                console.error("Error en la solicitud al webhook:", error);
-            }
+            }),
         });
     </script>
 </body>

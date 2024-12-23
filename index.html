@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuenta regresvia VHS</title>
+    <title>Cuenta regresiva VHS</title>
     <style>
         /* Fondo oscuro con parpadeo tenue */
         body {
@@ -25,38 +25,19 @@
             50% { background-color: #111; }
         }
 
-        /* Mensaje depresivo con animación de desvanecimiento */
+        /* Mensaje sin el efecto glitch y con animación de desvanecimiento */
         #message {
-            font-size: 1.5em;
+            font-size: 2em;
             text-align: center;
             margin: 0 20px;
             opacity: 0;
-            color: #808080;
+            color: #f5f5f5; /* Color más claro para el texto */
             animation: fadeInOut 8s infinite ease-in-out;
         }
 
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
-        }
-
-        /* Efecto glitch en el texto */
-        #message::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 2px;
-            text-shadow: -1px 0 red;
-            top: 0;
-            color: #f00;
-            overflow: hidden;
-            clip-path: inset(0 50% 0 0);
-            animation: glitch 1s infinite;
-        }
-
-        @keyframes glitch {
-            0% { clip-path: inset(0 100% 0 0); }
-            50% { clip-path: inset(0 0 0 0); }
-            100% { clip-path: inset(0 0 0 100%); }
         }
 
         /* Efecto de ruido en pantalla */
@@ -74,9 +55,7 @@
     </style>
 </head>
 <body>
-    <div id="message" data-text="¿Por qué estás aquí?">
-        ¿Por qué estás aquí?
-    </div>
+    <div id="message">¿Por qué estás aquí?</div>
     <div id="noise"></div>
     <audio id="audio" src="https://freesound.org/data/previews/156/156264_2437358-lq.mp3" loop></audio>
 
@@ -99,4 +78,3 @@
     </script>
 </body>
 </html>
-
